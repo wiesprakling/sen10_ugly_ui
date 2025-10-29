@@ -3,7 +3,7 @@ name: Deploy Static Site
 on:
   push:
     branches:
-      - main  # run this workflow when you push to main
+      - main  # run this workflow when you push to main
 
 jobs:
   lint-and-deploy:
@@ -18,16 +18,14 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: '20'  # or any LTS version
+          node-version: '20'  # or any LTS version
 
       # 3. Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 4. Run ESLint
-      # 4. Run ESLint
+      # 4. Run ESLint (FIXED: using npm run lint to avoid permission errors)
       - name: Run ESLint
-        # CHANGE THIS LINE from 'npx eslint .'
         run: npm run lint
 
       # 5. Deploy to GitHub Pages
