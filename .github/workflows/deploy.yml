@@ -24,7 +24,12 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      # 4. Run ESLint (FIXED: using npm run lint to avoid permission errors)
+      # 3.5. FIX: Grant execute permission to binaries
+      # This resolves the 'sh: 1: eslint: Permission denied' error.
+      - name: Set permissions for binaries
+        run: chmod +x node_modules/.bin/*
+
+      # 4. Run ESLint (Uses the 'lint' script from package.json)
       - name: Run ESLint
         run: npm run lint
 
