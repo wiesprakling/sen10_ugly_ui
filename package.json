@@ -1,0 +1,25 @@
+{
+  "name": "sen10_ugly_ui",
+  "version": "1.0.0",
+  "description": "Static website for Software Configuration Management assignment",
+  "main": "script.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/wiesprakling/sen10_ugly_ui.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/wiesprakling/sen10_ugly_ui/issues"
+  },
+  "homepage": "https://github.com/wiesprakling/sen10_ugly_ui#readme",
+  "devDependencies": {
+    "@eslint/js": "^9.38.0",
+    "eslint": "^9.38.0",
+    "globals": "^16.4.0"
+  }
+}
