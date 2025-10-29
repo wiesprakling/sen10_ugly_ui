@@ -15,3 +15,5 @@ export default defineConfig([
 ]);
 
 it has this code, revise it
+
+5. https://gemini.google.com/share/40e7c1c0b4f8
