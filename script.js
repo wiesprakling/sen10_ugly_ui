@@ -41,7 +41,6 @@ function getGreeting(hour) {
 // }
 
 function createConfetti() {
-  console.log("HOLA");
   if (typeof document === "undefined") return;
   const fragment = document.createDocumentFragment();
   const count = 50;
@@ -50,9 +49,8 @@ function createConfetti() {
     const confetti = document.createElement("div");
     confetti.classList.add("confetti");
     const x = Math.random() * window.innerWidth;
-    const y = Math.random() * 200;
     confetti.style.left = `${x}px`;
-    confetti.style.top = "$0px";
+    confetti.style.top = "0px"; // start at top of viewport
     confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
     const size = Math.random() * 8 + 4;
     confetti.style.width = `${size}px`;
@@ -64,6 +62,7 @@ function createConfetti() {
 
   document.body.appendChild(fragment);
 }
+
 
 
 // ✅ Sparkle animation (browser only)
