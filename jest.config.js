@@ -1,6 +1,6 @@
 export default {
   testEnvironment: "node",
-  extensionsToTreatAsEsm: [".js"],
-  transform: {}
+  // Enable ESM support for Jest
+  transform: {},
 };
 
