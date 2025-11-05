@@ -9,30 +9,55 @@ export function getGreeting(hour) {
 
 
 
-// ✅ Confetti animation (browser only)
-function createConfetti() {
-  if (typeof document === "undefined") return; // <-- prevents Jest errors
+// // ✅ Confetti animation (browser only)
+// function createConfetti() {
+//   if (typeof document === "undefined") return; // <-- prevents Jest errors
 
+//   const count = 50;
+//   for (let i = 0; i < count; i++) {
+//     const confetti = document.createElement("div");
+//     confetti.classList.add("confetti");
+
+//     const x = Math.random() * window.innerWidth;
+//     const y = Math.random() * 200; 
+//     confetti.style.left = `${x}px`;
+//     confetti.style.top = `-${y}px`;
+//     confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
+
+//     const size = Math.random() * 8 + 4; 
+//     confetti.style.width = `${size}px`;
+//     confetti.style.height = `${size}px`;
+//     confetti.style.animationDelay = `${Math.random() * 0.5}s`;
+    
+//     document.body.appendChild(confetti);
+//     setTimeout(() => confetti.remove(), 3000); 
+//   }
+// }
+
+function createConfetti() {
+  if (typeof document === "undefined") return;
+  const fragment = document.createDocumentFragment();
   const count = 50;
+
   for (let i = 0; i < count; i++) {
     const confetti = document.createElement("div");
     confetti.classList.add("confetti");
-
     const x = Math.random() * window.innerWidth;
-    const y = Math.random() * 200; 
+    const y = Math.random() * 200;
     confetti.style.left = `${x}px`;
     confetti.style.top = `-${y}px`;
     confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
-
-    const size = Math.random() * 8 + 4; 
+    const size = Math.random() * 8 + 4;
     confetti.style.width = `${size}px`;
     confetti.style.height = `${size}px`;
     confetti.style.animationDelay = `${Math.random() * 0.5}s`;
-    
-    document.body.appendChild(confetti);
-    setTimeout(() => confetti.remove(), 3000); 
+    fragment.appendChild(confetti);
+    setTimeout(() => confetti.remove(), 3000);
   }
+
+  document.body.appendChild(fragment);
 }
+
 
 // ✅ Sparkle animation (browser only)
 function createSparkles() {
