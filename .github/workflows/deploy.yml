@@ -14,10 +14,20 @@ jobs:
         uses: actions/setup-node@v4
         with:
           node-version: '20'
+
       - name: Install dependencies
         run: npm install
+
+      # ➡️ NEW STEP: Explicitly grant execution permission to the binary
+      - name: Set Execute Permission for ESLint
+        # This command finds the eslint binary inside the node_modules/.bin directory
+        # and grants it execution (+x) rights.
+        run: chmod +x ./node_modules/.bin/eslint 
+      
       - name: Run ESlint
-        run: npx eslint . # Use npx to execute the locally installed ESLint binary
+        # Now run the lint script or npx again. 
+        # Using 'npm run lint' should now work because permissions are fixed.
+        run: npm run lint
 
   test: # TEST JOB
     needs: lint # Only run tests if linting passes
