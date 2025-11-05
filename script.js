@@ -1,7 +1,13 @@
 // script.js
 
-// ✅ Pure function used for testing
-export function getGreeting(hour) {
+// // ✅ Pure function used for testing
+// export function getGreeting(hour) {
+//   if (hour < 12) return "Good morning 🌅";
+//   if (hour < 18) return "Good afternoon 🌞";
+//   return "Good evening 🌙";
+// }
+
+function getGreeting(hour) {
   if (hour < 12) return "Good morning 🌅";
   if (hour < 18) return "Good afternoon 🌞";
   return "Good evening 🌙";
