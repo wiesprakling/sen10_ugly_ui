@@ -5,6 +5,11 @@ on:
     branches:
       - main
 
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   lint:
     runs-on: ubuntu-latest
@@ -39,15 +44,14 @@ jobs:
       - name: Install dependencies
         run: npm install
 
-      - name: Fix ESLint Permissions (needed because tests also import modules)
+      - name: Fix ESLint Permissions
         run: chmod +x ./node_modules/.bin/eslint
 
       - name: Run Jest Tests
-        run: npm test    # ✅ this now actually runs your tests
+        run: npm test
 
   deploy:
     needs: [lint, test]
-    if: success()
     runs-on: ubuntu-latest
     environment:
       name: github-pages
@@ -63,8 +67,9 @@ jobs:
       - name: Upload artifact
         uses: actions/upload-pages-artifact@v3
         with:
-          path: "./"
+          path: "./"  # If your site files are in root. Change to "dist" if you build.
 
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v4
+
