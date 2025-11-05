@@ -1,9 +1,9 @@
 {
   "name": "sen10_ugly_ui",
   "version": "1.0.0",
+  "type": "module",
   "description": "Static website for Software Configuration Management assignment",
   "main": "script.js",
-  "type": "module",
   "scripts": {
     "test": "jest",
     "lint": "eslint ."
