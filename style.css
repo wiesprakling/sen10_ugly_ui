@@ -1,16 +1,94 @@
+/* style.css */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
 body {
-  font-family: Arial, sans-serif;
-  background-color: #f9f9f9;
-  color: #333;
+  margin: 0;
+  font-family: 'Poppins', sans-serif;
+  background: linear-gradient(135deg, #1e3c72, #2a5298);
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
   text-align: center;
-  padding: 30px;
 }
 
-img {
-  border: 4px solid #ff0000;
-  margin: 20px 0;
+.container {
+  background: rgba(255, 255, 255, 0.1);
+  padding: 40px;
+  border-radius: 25px;
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.3);
+  backdrop-filter: blur(10px);
+  width: 90%;
+  max-width: 700px;
+  animation: fadeIn 1.5s ease;
 }
 
-h1 {
-  color: #b30000;
+.title {
+  font-size: 2.2rem;
+  margin-bottom: 20px;
+  color: #fffa;
+}
+
+.ui-image {
+  border-radius: 15px;
+  box-shadow: 0 4px 15px rgba(255, 255, 255, 0.3);
+  transition: transform 0.5s ease;
+}
+
+.ui-image:hover {
+  transform: scale(1.05);
+}
+
+.info-section {
+  margin: 25px 0;
+  line-height: 1.6;
+  text-align: left;
+}
+
+button {
+  background: #ff6b6b;
+  color: white;
+  border: none;
+  padding: 12px 24px;
+  border-radius: 25px;
+  cursor: pointer;
+  font-size: 1.1rem;
+  transition: all 0.3s ease;
+  margin-top: 10px;
+}
+
+button:hover {
+  background: #ff8787;
+  transform: scale(1.1);
+}
+
+footer {
+  margin-top: 30px;
+  font-size: 0.9rem;
+  opacity: 0.8;
+}
+
+.sparkle {
+  position: absolute;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  animation: fly 1.5s ease-out;
+}
+
+@keyframes fly {
+  from {
+    transform: scale(1);
+    opacity: 1;
+  }
+  to {
+    transform: translateY(-100px) scale(0);
+    opacity: 0;
+  }
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(30px); }
+  to { opacity: 1; transform: translateY(0); }
 }
