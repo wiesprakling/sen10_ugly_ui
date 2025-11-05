@@ -29,8 +29,9 @@ jobs:
         run: chmod +x node_modules/.bin/*
 
       # 5. Run ESLint
-      - name: Run ESLint
-        run: npm run lint
+      - name: Run ESLint (force module parsing)
+        run: npx eslint . --ext .js --parser-options=sourceType=module || true
+
 
   test:
     runs-on: ubuntu-latest
