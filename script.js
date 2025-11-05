@@ -67,7 +67,13 @@ if (typeof document !== "undefined") {
     createConfetti(); 
 
     // sparkle button event
-    const button = document.getElementById("magicButton");
-    if (button) button.addEventListener("click", createSparkles);
-  });
+      const button = document.getElementById("magicButton");
+  if (button) {
+    button.addEventListener("click", () => {
+      createSparkles();
+      createConfetti(); // ✅ confetti now works on click
+    });
+  }
+});
+
 }
