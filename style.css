@@ -92,3 +92,19 @@ footer {
   from { opacity: 0; transform: translateY(30px); }
   to { opacity: 1; transform: translateY(0); }
 }
+
+/* style.css */
+/* ... (Your existing styles) ... */
+
+/* New styles for the confetti effect */
+.confetti {
+  position: absolute;
+  border-radius: 50%;
+  opacity: 0; /* Starts invisible */
+  animation: fallAndFade 3s ease-out forwards;
+}
+
+@keyframes fallAndFade {
+  0% { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(100vh) rotate(720deg); opacity: 0; }
+}
