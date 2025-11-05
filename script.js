@@ -19,7 +19,7 @@ function createConfetti() {
     const x = Math.random() * window.innerWidth;
     const y = Math.random() * 200; 
     confetti.style.left = `${x}px`;
-    confetti.style.top = `${y}px`;
+    confetti.style.top = `-${y}px`;
     confetti.style.backgroundColor = `hsl(${Math.random() * 360}, 100%, 75%)`;
 
     const size = Math.random() * 8 + 4; 
