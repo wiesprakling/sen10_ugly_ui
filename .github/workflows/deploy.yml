@@ -1,65 +1,27 @@
-name: CI/CD Pipeline # Changed name to better reflect CI/CD
+name: CI
 
-on:
-  push:
-    branches:
-      - main # Run this workflow when you push to main
+on: [push, pull_request]
 
 jobs:
-  lint: # LINT JOB
+  build:
     runs-on: ubuntu-latest
+
     steps:
       - uses: actions/checkout@v4
-      - name: Setup Node.js
+
+      - name: Use Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
-      # ➡️ NEW STEP: Explicitly grant execution permission to the binary
-      - name: Set Execute Permission for ESLint
-        # This command finds the eslint binary inside the node_modules/.bin directory
-        # and grants it execution (+x) rights.
-        run: chmod +x ./node_modules/.bin/eslint 
-      
-      - name: Run ESlint
-        # Now run the lint script or npx again. 
-        # Using 'npm run lint' should now work because permissions are fixed.
+      - name: Fix ESLint permission
+        run: chmod +x ./node_modules/.bin/eslint
+
+      - name: Run lint
         run: npm run lint
 
-  test: # TEST JOB
-    needs: lint # Only run tests if linting passes
-    runs-on: ubuntu-latest
-    steps:
-      - uses: actions/checkout@v4
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: '20'
-      - name: Install dependencies
-        run: npm install
-      - name: Run Jest Tests
-        run: npx eslint .
-
-  deploy: # DEPLOYMENT JOB (20 pts: Conditional deployment met here)
-    environment:
-      name: github-pages
-      url: ${{ steps.deployment.outputs.page_url }}
-    runs-on: ubuntu-latest
-    # Deployment only happens if BOTH lint and test have passed
-    needs: [lint, test] 
-    if: success()
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v4
-      - name: Setup Pages
-        uses: actions/configure-pages@v4
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v3
-        with:
-          path: './' # Upload the entire root directory
-      - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v4
+      - name: Run tests
+        run: npm test
