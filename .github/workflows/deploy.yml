@@ -3,39 +3,67 @@ name: Deploy Static Site
 on:
   push:
     branches:
-      - main  # run this workflow when you push to main
+      - main  # Run this workflow when you push to main
 
 jobs:
-  lint-and-deploy:
+  lint:
     runs-on: ubuntu-latest
 
     steps:
       # 1. Checkout repo
       - name: Checkout repository
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # 2. Setup Node.js
       - name: Setup Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
-          node-version: '20'  # or any LTS version
+          node-version: '20'
 
       # 3. Install dependencies
       - name: Install dependencies
         run: npm install
 
-      # 3.5. FIX: Grant execute permission to binaries
-      # This resolves the 'sh: 1: eslint: Permission denied' error.
+      # 4. Fix permissions (prevents "Permission denied" for eslint)
       - name: Set permissions for binaries
         run: chmod +x node_modules/.bin/*
 
-      # 4. Run ESLint (Uses the 'lint' script from package.json)
+      # 5. Run ESLint
       - name: Run ESLint
         run: npm run lint
 
-      # 5. Deploy to GitHub Pages
+  test:
+    runs-on: ubuntu-latest
+    needs: lint  # ✅ Only runs if lint job passes
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Install dependencies
+        run: npm install
+
+      # ✅ Run Jest tests
+      - name: Run Jest tests
+        run: npm test
+
+  deploy:
+    runs-on: ubuntu-latest
+    needs: test  # ✅ Only runs if tests pass
+    if: ${{ success() }}  # Prevents deploy if tests fail
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
       - name: Deploy to GitHub Pages
         uses: peaceiris/actions-gh-pages@v3
         with:
           github_token: ${{ secrets.GITHUB_TOKEN }}
           publish_dir: ./
+
