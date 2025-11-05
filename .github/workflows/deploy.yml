@@ -17,8 +17,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run ESlint
-        # Important: This command FAILS the job if lint errors are found.
-        run: npm run lint 
+        run: npx eslint . # Use npx to execute the locally installed ESLint binary
 
   test: # TEST JOB
     needs: lint # Only run tests if linting passes
