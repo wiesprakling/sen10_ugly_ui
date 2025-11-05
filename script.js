@@ -35,6 +35,7 @@ export function getGreeting(hour) {
 // }
 
 function createConfetti() {
+  console.log("HOLA");
   if (typeof document === "undefined") return;
   const fragment = document.createDocumentFragment();
   const count = 50;
