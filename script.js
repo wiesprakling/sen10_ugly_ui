@@ -1,4 +1,14 @@
 // script.js
+// script.js (Add this utility function)
+function getGreeting(hour) {
+  if (hour < 12) return "Good morning 🌅";
+  if (hour < 18) return "Good afternoon 🌞";
+  return "Good evening 🌙";
+}
+// For testing in a Node/Jest environment, we need to export it.
+// This line will be ignored by the browser.
+try { module.exports = { getGreeting }; } catch(e) {} 
+// ... rest of script.js ...
 
 // New function for the confetti effect
 function createConfetti() {
