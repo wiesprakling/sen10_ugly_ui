@@ -2,8 +2,11 @@
 
 // ✅ Pure function used for testing
 export function getGreeting(hour) {
-  return "This is wrong"; // forces the test to fail
+  if (hour < 12) return "Good morning 🌅";
+  if (hour < 18) return "Good afternoon 🌞";
+  return "Good evening 🌙";
 }
+
 
 
 // ✅ Confetti animation (browser only)
