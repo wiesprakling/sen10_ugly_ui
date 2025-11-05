@@ -1,15 +1,16 @@
-import { defineConfig } from "eslint/config";
-import globals from "globals";
+// eslint.config.mjs
+import js from "@eslint/js";
 
-export default defineConfig({
-  files: ["**/*.js"], // lint all JS files
-  languageOptions: {
-    globals: globals.browser, // browser globals like window, document
-    sourceType: "script",
-    ecmaVersion: 2021,
-  },
-  rules: {
-    semi: ["error", "always"], // require semicolons
-    // You can add more rules here if needed
-  },
-});
+export default [
+  js.configs.recommended,
+  {
+    files: ["**/*.js"],
+    languageOptions: {
+      ecmaVersion: "latest",
+      sourceType: "module", // <- THIS FIXES THE IMPORT/EXPORT ERROR
+    },
+    rules: {
+      // Add project rules here if needed
+    }
+  }
+];
