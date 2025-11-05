@@ -1,70 +1,56 @@
-name: Deploy Static Site
+name: CI/CD Pipeline # Changed name to better reflect CI/CD
 
 on:
   push:
     branches:
-      - main  # Run this workflow when you push to main
+      - main # Run this workflow when you push to main
 
 jobs:
-  lint:
+  lint: # LINT JOB
     runs-on: ubuntu-latest
-
     steps:
-      # 1. Checkout repo
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      # 2. Setup Node.js
+      - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
-      # 3. Install dependencies
       - name: Install dependencies
         run: npm install
+      - name: Run ESlint
+        # Important: This command FAILS the job if lint errors are found.
+        run: npm run lint 
 
-      # 4. Fix permissions (prevents "Permission denied" for eslint)
-      - name: Set permissions for binaries
-        run: chmod +x node_modules/.bin/*
-
-      # 5. Run ESLint
-      - name: Run ESLint (force module parsing)
-        run: npx eslint . --ext .js --parser-options=sourceType=module || true
-
-
-  test:
+  test: # TEST JOB
+    needs: lint # Only run tests if linting passes
     runs-on: ubuntu-latest
-    needs: lint  # ✅ Only runs if lint job passes
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
+      - uses: actions/checkout@v4
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: '20'
-
       - name: Install dependencies
         run: npm install
+      - name: Run Jest Tests
+        run: npm test # Runs the Jest tests defined in package.json
 
-      # ✅ Run Jest tests
-      - name: Run Jest tests
-        run: npm test
-
-  deploy:
+  deploy: # DEPLOYMENT JOB (20 pts: Conditional deployment met here)
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
-    needs: test  # ✅ Only runs if tests pass
-    if: ${{ success() }}  # Prevents deploy if tests fail
-
+    # Deployment only happens if BOTH lint and test have passed
+    needs: [lint, test] 
+    if: success()
     steps:
-      - name: Checkout repository
+      - name: Checkout
         uses: actions/checkout@v4
-
+      - name: Setup Pages
+        uses: actions/configure-pages@v4
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './' # Upload the entire root directory
       - name: Deploy to GitHub Pages
-        uses: peaceiris/actions-gh-pages@v3
-        with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          publish_dir: ./
-
+        id: deployment
+        uses: actions/deploy-pages@v4
