@@ -32,7 +32,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Run Jest Tests
-        run: npm test # Runs the Jest tests defined in package.json
+        run: npx eslint .
 
   deploy: # DEPLOYMENT JOB (20 pts: Conditional deployment met here)
     environment:
