@@ -1,15 +1,16 @@
 // script.js
 
-// utility function for testing
+// ✅ Pure function used for testing
 export function getGreeting(hour) {
   if (hour < 12) return "Good morning 🌅";
   if (hour < 18) return "Good afternoon 🌞";
   return "Good evening 🌙";
 }
 
-
-// New function for the confetti effect
+// ✅ Confetti animation (browser only)
 function createConfetti() {
+  if (typeof document === "undefined") return; // <-- prevents Jest errors
+
   const count = 50;
   for (let i = 0; i < count; i++) {
     const confetti = document.createElement("div");
@@ -31,7 +32,10 @@ function createConfetti() {
   }
 }
 
+// ✅ Sparkle animation (browser only)
 function createSparkles() {
+  if (typeof document === "undefined") return; // <-- prevents Jest errors
+
   for (let i = 0; i < 25; i++) {
     const sparkle = document.createElement("div");
     sparkle.classList.add("sparkle");
@@ -43,25 +47,27 @@ function createSparkles() {
   }
 }
 
-// DOM Loaded behavior
-document.addEventListener("DOMContentLoaded", () => {
-  const title = document.querySelector(".title");
-  const hour = new Date().getHours();
-  const greeting = getGreeting(hour);
+// ✅ Only run UI code in browser, not in Jest
+if (typeof document !== "undefined") {
+  document.addEventListener("DOMContentLoaded", () => {
+    const title = document.querySelector(".title");
+    const hour = new Date().getHours();
+    const greeting = getGreeting(hour);
 
-  // change title dynamically
-  title.textContent = `${greeting} — Ugliest UI Ever (But Not Anymore!) 😱`;
+    // change title dynamically
+    title.textContent = `${greeting} — Ugliest UI Ever (But Not Anymore!) 😱`;
 
-  // smooth color animation
-  setInterval(() => {
-    const color = `hsl(${Math.random() * 360}, 70%, 70%)`;
-    title.style.color = color;
-  }, 1200);
+    // smooth color animation
+    setInterval(() => {
+      const color = `hsl(${Math.random() * 360}, 70%, 70%)`;
+      title.style.color = color;
+    }, 1200);
 
-  // confetti effect on page load
-  createConfetti(); 
+    // confetti effect on page load
+    createConfetti(); 
 
-  // sparkle button event
-  const button = document.getElementById("magicButton");
-  button.addEventListener("click", createSparkles);
-});
+    // sparkle button event
+    const button = document.getElementById("magicButton");
+    if (button) button.addEventListener("click", createSparkles);
+  });
+}
